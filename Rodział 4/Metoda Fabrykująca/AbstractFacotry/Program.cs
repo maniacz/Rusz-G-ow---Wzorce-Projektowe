@@ -44,14 +44,14 @@ namespace FactoryMethod
         public abstract class Pizza
         {
             protected string nazwa;
-            protected string ciasto;
-            protected string sos;
+            protected Ciasto ciasto;
+            protected Sos sos;
             protected Warzywa[] warzywa;
             protected Ser ser;
             protected Pepperoni pepperoni;
             protected Malze malze;
 
-            protected abstract void Przygotowanie();
+            public abstract void Przygotowanie();
 
             public void Pieczenie()
             {
@@ -72,28 +72,39 @@ namespace FactoryMethod
             {
                 return nazwa;
             }
+
+            internal void UstawNazwa(string nazwa)
+            {
+                this.nazwa = nazwa;
+            }
         }
 
         public class WloskaPizzeria : Pizzeria
         {
             protected override Pizza UtworzPizza(string typ)
             {
+                Pizza pizza = null;
+                FabrykaSkladnikowPizzy fabrykaSkladnikow = new WloskaFabrykaSkladnikowPizzy();
+
                 if (typ.Equals("serowa"))
                 {
-                    return new WloskaSerowaPizza();
+                    pizza = new SerowaPzizza(fabrykaSkladnikow);
+                    pizza.UstawNazwa("Włoska pizza serowa");
+                }
+                else if (typ.Equals("owoce morza"))
+                {
+                    pizza = new OwoceMorzaPizza(fabrykaSkladnikow);
+                    pizza.UstawNazwa("Włoska pizza owoce morza");
                 }
                 /*
                 else if (typ.Equals("wegetarianska"))
                 {
-                    return new WloskaWegetarianskaPizza();
-                }
-                else if (typ.Equals("owoce morza"))
-                {
-                    return new WloskaOwoceMorzaPizza();
+                    pizza = new WegetarianskaPizza(fabrykaSkladnikow);
+                    pizza.UstawNazwa("Włoska pizza wegetarianska");
                 }
                 */
-                else
-                    return null;
+
+                return pizza;
             }
         }
 
@@ -120,32 +131,40 @@ namespace FactoryMethod
             }
         }
 
-        public class WloskaSerowaPizza : Pizza
+        public class SerowaPizza : Pizza
         {
-            public WloskaSerowaPizza()
-            {
-                nazwa = "Włoska pizza serowa z sosem Marinara";
-                ciasto = "Cienkie kruche ciasto";
-                sos = "Sos Marinara";
+            FabrykaSkladnikowPizzy fabrykaSkladnikow;
 
-                dodatki.Add("Tarty ser Reggiano");
+            public SerowaPizza(FabrykaSkladnikowPizzy fabrykaSkladnikow)
+            {
+                this.fabrykaSkladnikow = fabrykaSkladnikow;
+            }
+
+            public override void Przygotowanie()
+            {
+                Console.WriteLine("Przygotowanie: " + nazwa);
+                ciasto = fabrykaSkladnikow.UtworzCiasto();
+                sos = fabrykaSkladnikow.UtworzSos();
+                ser = fabrykaSkladnikow.UtworzSer();
             }
         }
 
-        public class AmerykanskaSerowaPizza : Pizza
+        public class OwoceMorzaPizza : Pizza
         {
-            public AmerykanskaSerowaPizza()
-            {
-                nazwa = "Amerykanska pizza serowa";
-                ciasto = "Extra grube, chrupkie ciasto";
-                sos = "Sos z pomidorów śliwkowych";
+            FabrykaSkladnikowPizzy fabrykaSkladnikow;
 
-                dodatki.Add("Grubo tarty ser Mozarella");
+            public OwoceMorzaPizza(FabrykaSkladnikowPizzy fabrykaSkladnikow)
+            {
+                this.fabrykaSkladnikow = fabrykaSkladnikow;
             }
 
-            public override void Krojenie()
+            public override void Przygotowanie()
             {
-                Console.WriteLine("Krojenie pizzy na kwadratowe kawałki.");
+                Console.WriteLine("Przygotowanie: " + nazwa);
+                ciasto = fabrykaSkladnikow.UtworzCiasto();
+                sos = fabrykaSkladnikow.UtworzSos();
+                ser = fabrykaSkladnikow.UtworzSer();
+                malze = fabrykaSkladnikow.UtworzMalze();
             }
         }
 
