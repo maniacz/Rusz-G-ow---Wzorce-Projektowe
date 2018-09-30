@@ -7,7 +7,7 @@ namespace CommandWithRollback
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main_(string[] args)
         {
             SuperRemoteControllerWithRollback remote = new SuperRemoteControllerWithRollback();
             Light livingroomLight = new Light();
@@ -23,6 +23,30 @@ namespace CommandWithRollback
             remote.PushedRollBack();
             remote.PushedTurnOff(0);
             remote.PushedTurnOn(0);
+            Console.WriteLine(remote);
+            remote.PushedRollBack();
+
+            Console.ReadKey();
+        }
+
+        static void Main()
+        {
+            SuperRemoteControllerWithRollback remote = new SuperRemoteControllerWithRollback();
+            CeilingFan ceilingFan = new CeilingFan("Jadalnia");
+
+            CommandSetMediumSpeedOnFan commandFanMediumSpeed = new CommandSetMediumSpeedOnFan(ceilingFan);
+            CommandSetHighSpeedOnFan commandFanHighSpeed = new CommandSetHighSpeedOnFan(ceilingFan);
+            CommandTurnOffFan commandTurnOffFan = new CommandTurnOffFan(ceilingFan);
+
+            remote.SetCommand(0, commandFanMediumSpeed, commandTurnOffFan);
+            remote.SetCommand(1, commandFanHighSpeed, commandTurnOffFan);
+
+            remote.PushedTurnOn(0);
+            remote.PushedTurnOff(0);
+            Console.WriteLine(remote);
+            remote.PushedRollBack();
+
+            remote.PushedTurnOn(1);
             Console.WriteLine(remote);
             remote.PushedRollBack();
 
@@ -89,6 +113,80 @@ namespace CommandWithRollback
             {
                 previousSpeed = fan.GetCurrentSpeed();
                 fan.HighSpeed();
+            }
+
+            public void Rollback()
+            {
+                if (previousSpeed == CeilingFan.FAST)
+                {
+                    fan.HighSpeed();
+                }
+                else if (previousSpeed == CeilingFan.MEDIUM)
+                {
+                    fan.MediumSpeed();
+                }
+                else if (previousSpeed == CeilingFan.LOW)
+                {
+                    fan.LowSpeed();
+                }
+                else if (previousSpeed == CeilingFan.OFF)
+                {
+                    fan.TurnOff();
+                }
+            }
+        }
+
+        public class CommandSetMediumSpeedOnFan : ICommand
+        {
+            CeilingFan fan;
+            int previousSpeed;
+
+            public CommandSetMediumSpeedOnFan(CeilingFan fan)
+            {
+                this.fan = fan;
+            }
+
+            public void Execute()
+            {
+                previousSpeed = fan.GetCurrentSpeed();
+                fan.MediumSpeed();
+            }
+
+            public void Rollback()
+            {
+                if (previousSpeed == CeilingFan.FAST)
+                {
+                    fan.HighSpeed();
+                }
+                else if (previousSpeed == CeilingFan.MEDIUM)
+                {
+                    fan.MediumSpeed();
+                }
+                else if (previousSpeed == CeilingFan.LOW)
+                {
+                    fan.LowSpeed();
+                }
+                else if (previousSpeed == CeilingFan.OFF)
+                {
+                    fan.TurnOff();
+                }
+            }
+        }
+
+        public class CommandTurnOffFan : ICommand
+        {
+            CeilingFan fan;
+            int previousSpeed;
+
+            public CommandTurnOffFan(CeilingFan fan)
+            {
+                this.fan = fan;
+            }
+
+            public void Execute()
+            {
+                previousSpeed = fan.GetCurrentSpeed();
+                fan.TurnOff();
             }
 
             public void Rollback()
