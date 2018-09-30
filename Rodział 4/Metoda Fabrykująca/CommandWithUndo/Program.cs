@@ -93,9 +93,21 @@ namespace CommandWithRollback
 
             public void Rollback()
             {
-                if (previousSpeed == fan.)
+                if (previousSpeed == CeilingFan.FAST)
                 {
-
+                    fan.HighSpeed();
+                }
+                else if (previousSpeed == CeilingFan.MEDIUM)
+                {
+                    fan.MediumSpeed();
+                }
+                else if (previousSpeed == CeilingFan.LOW)
+                {
+                    fan.LowSpeed();
+                }
+                else if (previousSpeed == CeilingFan.OFF)
+                {
+                    fan.TurnOff();
                 }
             }
         }
