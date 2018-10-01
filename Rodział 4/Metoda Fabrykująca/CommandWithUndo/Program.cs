@@ -29,7 +29,7 @@ namespace CommandWithRollback
             Console.ReadKey();
         }
 
-        static void Main()
+        static void Main__()
         {
             SuperRemoteControllerWithRollback remote = new SuperRemoteControllerWithRollback();
             CeilingFan ceilingFan = new CeilingFan("Jadalnia");
@@ -49,6 +49,41 @@ namespace CommandWithRollback
             remote.PushedTurnOn(1);
             Console.WriteLine(remote);
             remote.PushedRollBack();
+
+            Console.ReadKey();
+        }
+
+        static void Main()
+        {
+            SuperRemoteControllerWithRollback remote = new SuperRemoteControllerWithRollback();
+            Light light = new Light("Salon: ");
+            TV tv = new TV("Salon: ");
+            HiFi hiFi = new HiFi("Salon: ");
+            Jacuzzi jacuzzi = new Jacuzzi();
+
+            CommandTurnOnLight turnOnLight = new CommandTurnOnLight(light);
+            CommandTurnOnHiFi turnOnHiFi = new CommandTurnOnHiFi(hiFi);
+            CommandTurnOnTV turnOnTV = new CommandTurnOnTV(tv);
+            CommandTurnOnJacuzzi turnOnJacuzzi = new CommandTurnOnJacuzzi(jacuzzi);
+
+            CommandTurnOffLight turnOffLight = new CommandTurnOffLight(light);
+            CommandTurnOffHiFi turnOffHiFi = new CommandTurnOffHiFi(hiFi);
+            CommandTurnOffTV turnOffTV = new CommandTurnOffTV(tv);
+            CommandTurnOffJacuzzi turnOffJacuzzi = new CommandTurnOffJacuzzi(jacuzzi);
+
+            ICommand[] partyTurnOn = { turnOnLight, turnOnHiFi, turnOnTV, turnOnJacuzzi };
+            ICommand[] partyTurnOff = { turnOffLight, turnOffHiFi, turnOffTV, turnOffJacuzzi };
+
+            MakroCommand makroTurnOnParty = new MakroCommand(partyTurnOn);
+            MakroCommand makroTurnOffParty = new MakroCommand(partyTurnOff);
+
+            remote.SetCommand(0, makroTurnOnParty, makroTurnOffParty);
+
+            Console.WriteLine(remote);
+            Console.WriteLine("---- Włączamy makro polecenie ----");
+            remote.PushedTurnOn(0);
+            Console.WriteLine("---- Wyłączamy makro polecenie ----");
+            remote.PushedTurnOff(0);
 
             Console.ReadKey();
         }
@@ -210,8 +245,137 @@ namespace CommandWithRollback
             }
         }
 
+        public class CommandTurnOnHiFi : ICommand
+        {
+            HiFi hiFi;
+
+            public CommandTurnOnHiFi(HiFi hiFi)
+            {
+                this.hiFi = hiFi;
+            }
+
+            public void Execute()
+            {
+                hiFi.TurnOn();
+            }
+
+            public void Rollback()
+            {
+                hiFi.TurnOff();
+            }
+        }
+
+        public class CommandTurnOffHiFi : ICommand
+        {
+            HiFi hiFi;
+
+            public CommandTurnOffHiFi(HiFi hiFi)
+            {
+                this.hiFi = hiFi;
+            }
+
+            public void Execute()
+            {
+                hiFi.TurnOff();
+            }
+
+            public void Rollback()
+            {
+                hiFi.TurnOn();
+            }
+        }
+
+        public class CommandTurnOnTV : ICommand
+        {
+            TV tv;
+
+            public CommandTurnOnTV(TV tv)
+            {
+                this.tv = tv;
+            }
+
+            public void Execute()
+            {
+                tv.TurnOn();
+            }
+
+            public void Rollback()
+            {
+                tv.TurnOff();
+            }
+        }
+
+        public class CommandTurnOffTV : ICommand
+        {
+            TV tv;
+
+            public CommandTurnOffTV(TV tv)
+            {
+                this.tv = tv;
+            }
+
+            public void Execute()
+            {
+                tv.TurnOff();
+            }
+
+            public void Rollback()
+            {
+                tv.TurnOn();
+            }
+        }
+
+        public class CommandTurnOnJacuzzi : ICommand
+        {
+            Jacuzzi jacuzzi;
+
+            public CommandTurnOnJacuzzi(Jacuzzi jacuzzi)
+            {
+                this.jacuzzi = jacuzzi;
+            }
+
+            public void Execute()
+            {
+                jacuzzi.TurnOn();
+            }
+
+            public void Rollback()
+            {
+                jacuzzi.TurnOff();
+            }
+        }
+
+        public class CommandTurnOffJacuzzi : ICommand
+        {
+            Jacuzzi jacuzzi;
+
+            public CommandTurnOffJacuzzi(Jacuzzi jacuzzi)
+            {
+                this.jacuzzi = jacuzzi;
+            }
+
+            public void Execute()
+            {
+                jacuzzi.TurnOff();
+            }
+
+            public void Rollback()
+            {
+                jacuzzi.TurnOn();
+            }
+        }
+
         public class Light
         {
+            string location;
+
+            public Light() { }
+
+            public Light(string location)
+            {
+                this.location = location;
+            }
+
             public void TurnOn()
             {
                 Console.WriteLine("Światło załączone.");
@@ -328,6 +492,95 @@ namespace CommandWithRollback
                 }
                 return sb.ToString();
             }
+        }
+
+        public class MakroCommand : ICommand
+        {
+            ICommand[] commands;
+
+            public MakroCommand(ICommand[] commands)
+            {
+                this.commands = commands;
+            }
+
+            public void Execute()
+            {
+                for (int i = 0; i < commands.Length; i++)
+                {
+                    commands[i].Execute();
+                }
+            }
+
+            public void Rollback()
+            {
+                for (int i = 0; i < commands.Length; i++)
+                {
+                    commands[i].Rollback();
+                }
+            }
+        }
+    }
+
+    internal class Jacuzzi
+    {
+        public void TurnOn()
+        {
+            Console.WriteLine("Jacuzzi włączone, temp. 30 stopni C");
+        }
+
+        public void TurnOff()
+        {
+            Console.WriteLine("Jacuzzi wyłączone, temp. 23 stopni C");
+        }
+
+        public void TurnOnBubbles()
+        {
+            Console.WriteLine("bąbelki włączone");
+        }
+    }
+
+    internal class HiFi
+    {
+        string location;
+
+        public HiFi(string location)
+        {
+            this.location = location;
+        }
+
+        public void TurnOn()
+        {
+            Console.WriteLine("Wieża włączona");
+        }
+
+        public void TurnOff()
+        {
+            Console.WriteLine("Wieża wyłączona");
+        }
+    }
+
+    internal class TV
+    {
+        string location;
+
+        public TV(string location)
+        {
+            this.location = location;
+        }
+
+        public void TurnOn()
+        {
+            Console.WriteLine("Telewizor włączony");
+        }
+
+        public void TurnOff()
+        {
+            Console.WriteLine("Telewizor wyłączony");
+        }
+
+        public void SetSource()
+        {
+            Console.WriteLine("Telewizor ustawiony na DVD");
         }
     }
 }
