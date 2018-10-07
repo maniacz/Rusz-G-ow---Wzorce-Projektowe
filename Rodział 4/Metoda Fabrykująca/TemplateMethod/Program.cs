@@ -7,7 +7,7 @@ namespace TemplateMethod
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main_(string[] args)
         {
             TeaWithHook tea = new TeaWithHook();
             CoffeeWithHook coffee = new CoffeeWithHook();
@@ -19,6 +19,37 @@ namespace TemplateMethod
             coffee.PrepareRecipe();
 
             Console.ReadKey();
+        }
+
+        static void Main()
+        {
+            Duck[] ducks =
+            {
+                new Duck("Kaczor Duffy", 8),
+                new Duck("Kaczro Dewey", 2),
+                new Duck("Kaczor Howard", 7),
+                new Duck("Kaczor Louie", 2),
+                new Duck("Kaczor Donald", 10),
+                new Duck("Kaczur Huey", 2)
+            };
+
+            Console.WriteLine("Przed sortowaniem");
+            Display(ducks);
+
+            Array.Sort(ducks);
+
+            Console.WriteLine("Po zakończeniu sortowania");
+            Display(ducks);
+
+            Console.ReadKey();
+        }
+
+        private static void Display(Duck[] ducks)
+        {
+            for (int i = 0; i < ducks.Length; i++)
+            {
+                Console.WriteLine(ducks[i]);
+            }
         }
     }
 
@@ -145,6 +176,36 @@ namespace TemplateMethod
             }
 
             return answer;
+        }
+    }
+
+    public class Duck : IComparable
+    {
+        string name;
+        int weight;
+
+        public Duck(string name, int weight)
+        {
+            this.name = name;
+            this.weight = weight;
+        }
+
+        public override string ToString()
+        {
+            return name + " waży " + weight;
+        }
+
+        public int CompareTo(object obj)
+        {
+            Duck anotherDuck = (Duck)obj;
+
+            if (this.weight < anotherDuck.weight)
+                return -1;
+            else if (this.weight == anotherDuck.weight)
+                return 0;
+            else
+                return 1;
+
         }
     }
 }
