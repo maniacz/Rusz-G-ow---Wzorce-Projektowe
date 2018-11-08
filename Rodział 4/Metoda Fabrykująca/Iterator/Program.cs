@@ -11,10 +11,10 @@ namespace Iterator
         {
             //PancakeHouseMenu pancakeHouseMenu = new PancakeHouseMenu();
             //DinerMenu dinerMenu = new DinerMenu();
-            IMenu pancakeHouseMenu = new PancakeHouseMenu();
+            //IMenu pancakeHouseMenu = new PancakeHouseMenu();
             DinerMenu dinerMenu = new DinerMenu();
-            Waitress waitress = new Waitress(pancakeHouseMenu, dinerMenu);
-            waitress.PrintMenu();
+            //Waitress waitress = new Waitress(pancakeHouseMenu, dinerMenu);
+            //waitress.PrintMenu();
 
             Console.ReadKey();
         }
@@ -56,7 +56,7 @@ namespace Iterator
         }
     }
 
-    public class PancakeHouseMenu : IMenu
+    public class PancakeHouseMenu //: IMenu
     {
         List<MenuEntry> menuEntries;
 
@@ -92,10 +92,10 @@ namespace Iterator
             return menuEntries.GetEnumerator();
         }
 
-        IIterator IMenu.CreateIterator()
-        {
-            return menuEntries.GetEnumerator();
-        }
+        //IIterator IMenu.CreateIterator()
+        //{
+        //    //return menuEntries.GetEnumerator();
+        //}
     }
 
     public class DinerMenu
@@ -255,5 +255,10 @@ namespace Iterator
     public interface IMenu
     {
         IIterator CreateIterator();
+    }
+
+    public class AtJacksMenu
+    {
+        //Hash
     }
 }
