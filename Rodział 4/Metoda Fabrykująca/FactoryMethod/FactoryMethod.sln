@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateMachine", "..\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "State", "..\State\State.csproj", "{F080832C-D4B8-431A-900A-C556C55E0857}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "Proxy\Proxy.csproj", "{B0C7F0C8-6574-4ADD-A5A5-AE3A1CD74E42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{F080832C-D4B8-431A-900A-C556C55E0857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F080832C-D4B8-431A-900A-C556C55E0857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F080832C-D4B8-431A-900A-C556C55E0857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0C7F0C8-6574-4ADD-A5A5-AE3A1CD74E42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0C7F0C8-6574-4ADD-A5A5-AE3A1CD74E42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0C7F0C8-6574-4ADD-A5A5-AE3A1CD74E42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0C7F0C8-6574-4ADD-A5A5-AE3A1CD74E42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
