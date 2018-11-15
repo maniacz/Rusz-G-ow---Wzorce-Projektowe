@@ -19,9 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateMethod", "..\Templa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iterator - NOT FINISHED", "..\Iterator\Iterator - NOT FINISHED.csproj", "{A475E6C0-6676-4EE8-B3AC-33FE2CB3085D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateMachine", "..\State\SimpleStateMachine.csproj", "{E817FBF6-AF3D-4FCA-BEA0-60C02FF88E32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStateMachine", "..\SimpleStateMachine\SimpleStateMachine.csproj", "{E817FBF6-AF3D-4FCA-BEA0-60C02FF88E32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "State", "State\State.csproj", "{F080832C-D4B8-431A-900A-C556C55E0857}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "State", "..\State\State.csproj", "{F080832C-D4B8-431A-900A-C556C55E0857}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
