@@ -55,13 +55,38 @@ namespace CompoundPattern
 
             //Console.WriteLine("\nSymulator Kaczek");
             //Console.WriteLine("\nSymulator Kaczek z wzorcem Dekorator");
-            Console.WriteLine("\nSymulator Kaczek z wzorcem Fabryka Abstrakcyjna");
+            //Console.WriteLine("\nSymulator Kaczek z wzorcem Fabryka Abstrakcyjna");
+            Console.WriteLine("\nSymulator Kaczek ze wzorcem Kompozyt - stada");
 
-            Run(wildDuck);
-            Run(flatnoseDuck);
-            Run(baitDuck);
-            Run(rubberDuck);
-            Run(gooseDuck);
+            Herd duckHerd = new Herd();
+
+            duckHerd.Add(flatnoseDuck);
+            duckHerd.Add(baitDuck);
+            duckHerd.Add(rubberDuck);
+            duckHerd.Add(gooseDuck);
+
+            Herd wildDuckHerd = new Herd();
+
+            IQuacking wildDuck1 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck2 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck3 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck4 = duckFactory.CreateWildDuck();
+
+            wildDuckHerd.Add(wildDuck1);
+            wildDuckHerd.Add(wildDuck2);
+            wildDuckHerd.Add(wildDuck3);
+            wildDuckHerd.Add(wildDuck4);
+
+            duckHerd.Add(wildDuckHerd);
+
+            //Run(wildDuck);
+            //Run(flatnoseDuck);
+            //Run(baitDuck);
+            //Run(rubberDuck);
+            //Run(gooseDuck);
+
+            Console.WriteLine("\nSymulator kaczek: Symulacja całego stada");
+            Run(duckHerd);
 
             Console.WriteLine("Kaczki kwakały " + QuackCounter.GetQuackCount() + " razy");
             Console.ReadKey();
@@ -210,7 +235,7 @@ namespace CompoundPattern
     }
 
     //Stado - eng. Herd
-    public class Herd
+    public class Herd : IQuacking
     {
         ArrayList birds = new ArrayList();
 
@@ -222,6 +247,7 @@ namespace CompoundPattern
         public void Quack()
         {
             IEnumerator enumerator = birds.GetEnumerator();
+
             while (enumerator.MoveNext())
             {
                 IQuacking bird = (IQuacking)enumerator.Current;
