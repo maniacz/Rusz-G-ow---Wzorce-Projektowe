@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CompoundPattern.Observable;
 
 namespace CompoundPattern.CounterDecorator
 {
@@ -30,6 +31,16 @@ namespace CompoundPattern.CounterDecorator
         {
             Console.WriteLine("Reset licznika kwaknieć");
             quackCount = 0;
+        }
+
+        public void registerObservator(IObservator observator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void notifyObservators()
+        {
+            throw new NotImplementedException();
         }
     }
 }

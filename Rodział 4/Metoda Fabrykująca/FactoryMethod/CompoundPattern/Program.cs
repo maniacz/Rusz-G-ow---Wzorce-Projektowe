@@ -14,7 +14,8 @@ namespace CompoundPattern
             //duckSimulator.SimulateWithGooseAdapter();
             //duckSimulator.SimulateWithQuackCounterDecorator();
             //duckSimulator.SimulateUsingDuckFactory();
-            duckSimulator.SimulateFlockComposite();
+            //duckSimulator.SimulateFlockComposite();
+            duckSimulator.SimulateFlockWithObserver();
         }
     }
 }

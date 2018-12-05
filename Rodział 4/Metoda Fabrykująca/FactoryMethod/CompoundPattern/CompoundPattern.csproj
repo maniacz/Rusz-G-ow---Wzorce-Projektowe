@@ -54,6 +54,10 @@
     <Compile Include="Gooses\Goose.cs" />
     <Compile Include="Gooses\GooseAdapter.cs" />
     <Compile Include="IQuacking.cs" />
+    <Compile Include="Observable\IObservator.cs" />
+    <Compile Include="Observable\IQuackObservable.cs" />
+    <Compile Include="Observable\Observed.cs" />
+    <Compile Include="Observable\Quakologist.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

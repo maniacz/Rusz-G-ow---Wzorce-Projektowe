@@ -26,6 +26,7 @@ namespace CompoundPattern
             //Console.ReadKey();
         }
 
+
         public void SimulateWithGooseAdapter()
         {
             IQuacking wildDuck = new WildDuck();
@@ -121,6 +122,41 @@ namespace CompoundPattern
 
             Console.WriteLine("\nSymulator kaczek: Symulacja stada dzikich kaczek");
             Simulate(flockOfWildDucks);
+
+            Console.WriteLine("Kaczki kwaknęły " + QuackCounterDecorator.GetQuackCount() + " razy");
+            Console.ReadKey();
+        }
+
+        public void SimulateFlockWithObserver()
+        {
+            DuckAbstractFactory duckFactory = new CountingQuakDuckFactory();
+            IQuacking flatnoseDuck = duckFactory.CreateFlatnoseDuck();
+            IQuacking baitDuck = duckFactory.CreateBaitDuck();
+            IQuacking rubberDuck = duckFactory.CreateRubberDuck();
+            IQuacking gooseDuck = new GooseAdapter(new Goose());
+
+            Console.WriteLine("Symulator kaczek z wzorcem Kompozyt - stada");
+
+            Flock flockOfDucks = new Flock();
+            flockOfDucks.Add(flatnoseDuck);
+            flockOfDucks.Add(baitDuck);
+            flockOfDucks.Add(rubberDuck);
+            flockOfDucks.Add(gooseDuck);
+
+            Flock flockOfWildDucks = new Flock();
+            IQuacking wildDuck1 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck2 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck3 = duckFactory.CreateWildDuck();
+            IQuacking wildDuck4 = duckFactory.CreateWildDuck();
+            flockOfWildDucks.Add(wildDuck1);
+            flockOfWildDucks.Add(wildDuck2);
+            flockOfWildDucks.Add(wildDuck3);
+            flockOfWildDucks.Add(wildDuck4);
+
+            flockOfDucks.Add(flockOfWildDucks);
+
+            Console.WriteLine("\nSymulator kaczek: z wzorcem Obserwator");
+            Simulate(flockOfDucks);
 
             Console.WriteLine("Kaczki kwaknęły " + QuackCounterDecorator.GetQuackCount() + " razy");
             Console.ReadKey();
