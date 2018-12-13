@@ -4,6 +4,7 @@ using CompoundPattern.Gooses;
 using CompoundPattern.CounterDecorator;
 using CompoundPattern.DuckFactories;
 using CompoundPattern.BirdFlock;
+using CompoundPattern.Observable;
 
 namespace CompoundPattern
 {
@@ -135,8 +136,6 @@ namespace CompoundPattern
             IQuacking rubberDuck = duckFactory.CreateRubberDuck();
             IQuacking gooseDuck = new GooseAdapter(new Goose());
 
-            Console.WriteLine("Symulator kaczek z wzorcem Kompozyt - stada");
-
             Flock flockOfDucks = new Flock();
             flockOfDucks.Add(flatnoseDuck);
             flockOfDucks.Add(baitDuck);
@@ -156,6 +155,9 @@ namespace CompoundPattern
             flockOfDucks.Add(flockOfWildDucks);
 
             Console.WriteLine("\nSymulator kaczek: z wzorcem Obserwator");
+
+            Quakologist quackologist = new Quakologist();
+            flockOfDucks.registerObservator(quackologist);
             Simulate(flockOfDucks);
 
             Console.WriteLine("Kaczki kwaknęły " + QuackCounterDecorator.GetQuackCount() + " razy");

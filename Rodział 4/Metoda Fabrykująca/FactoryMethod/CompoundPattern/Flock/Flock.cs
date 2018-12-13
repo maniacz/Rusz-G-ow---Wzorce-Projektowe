@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
+﻿using System.Collections;
+using CompoundPattern.Observable;
 
 namespace CompoundPattern.BirdFlock
 {
     public class Flock : IQuacking
     {
         ArrayList birds = new ArrayList();
+        Observed observed;
+
+        public Flock()
+        {
+            observed = new Observed(this);
+        }
 
         public void Add(IQuacking bird)
         {
@@ -22,7 +25,18 @@ namespace CompoundPattern.BirdFlock
             {
                 IQuacking bird = (IQuacking)enumerator.Current;
                 bird.Quack();
+                notifyObservators();
             }
+        }
+
+        public void notifyObservators()
+        {
+            observed.notifyObservators();
+        }
+
+        public void registerObservator(IObservator observator)
+        {
+            observed.registerObservator(observator);
         }
     }
 }

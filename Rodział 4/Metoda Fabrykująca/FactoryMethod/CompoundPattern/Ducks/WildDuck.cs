@@ -10,7 +10,7 @@ namespace CompoundPattern.Ducks
     {
         Observed observed;
 
-        public WildDuck(Observed observed)
+        public WildDuck()
         {
             observed = new Observed(this);
         }
@@ -29,6 +29,11 @@ namespace CompoundPattern.Ducks
         public void registerObservator(IObservator observator)
         {
             observed.registerObservator(observator);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name;
         }
     }
 }

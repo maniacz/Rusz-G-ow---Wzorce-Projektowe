@@ -9,7 +9,7 @@ namespace CompoundPattern.Observable
     {
         public void Update(IQuackObservable duck)
         {
-            Console.WriteLine("Kwakolog: " + duck + " kwaknęła");
+            Console.WriteLine("Kwakolog: " + duck.ToString() + " kwaknęła");
         }
     }
 }

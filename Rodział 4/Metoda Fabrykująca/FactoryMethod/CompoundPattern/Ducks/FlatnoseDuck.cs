@@ -1,26 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CompoundPattern.Observable;
 
 namespace CompoundPattern.Ducks
 {
     public class FlatnoseDuck : IQuacking
     {
+        Observed observed;
+
+        public FlatnoseDuck()
+        {
+            observed = new Observed(this);
+        }
+
         public void Quack()
         {
             Console.WriteLine("Kwa! Kwa!");
+            notifyObservators();
         }
 
         public void notifyObservators()
         {
-            throw new NotImplementedException();
+            observed.notifyObservators();
         }
 
         public void registerObservator(IObservator observator)
         {
-            throw new NotImplementedException();
+            observed.registerObservator(observator);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name;
         }
     }
 }

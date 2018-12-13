@@ -8,20 +8,27 @@ namespace CompoundPattern.Ducks
 {
     public class BaitDuck : IQuacking
     {
+        Observed observed;
+
+        public BaitDuck()
+        {
+            observed = new Observed(this);
+        }
 
         public void Quack()
         {
             Console.WriteLine("Kwak!");
+            notifyObservators();
         }
 
         public void notifyObservators()
         {
-            throw new NotImplementedException();
+            observed.notifyObservators();
         }
 
         public void registerObservator(IObservator observator)
         {
-            throw new NotImplementedException();
+            observed.registerObservator(observator);
         }
     }
 }
