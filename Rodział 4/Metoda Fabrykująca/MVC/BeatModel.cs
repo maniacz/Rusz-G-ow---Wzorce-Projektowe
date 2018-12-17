@@ -9,7 +9,7 @@ namespace MVC
     {
         Sequencer sequencer;
         List<IBeatObserver> beatObservers = new List<IBeatObserver>();
-        List<IBPMObserver> beatObservers = new List<IBPMObserver>();
+        List<IBPMObserver> bpmObservers = new List<IBPMObserver>();
         int bpm = 90;
 
         public void Init()

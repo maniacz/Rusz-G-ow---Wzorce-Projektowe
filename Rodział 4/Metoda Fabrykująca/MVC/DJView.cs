@@ -40,25 +40,5 @@ namespace MVC
         {
             pbrBeatBar.Value = 100;
         }
-
-        public void ActivateStopMenuItem()
-        {
-            stopToolStripMenuItem.Enabled = true;
-        }
-
-        public void DeactivateStopMenuItem()
-        {
-            stopToolStripMenuItem.Enabled = false;
-        }
-
-        public void ActivateStartMenuItem()
-        {
-            startToolStripMenuItem.Enabled = true;
-        }
-
-        public void DeactivateStartMenuItem()
-        {
-            startToolStripMenuItem.Enabled = false;
-        }
     }
 }

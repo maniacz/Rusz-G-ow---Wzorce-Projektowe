@@ -10,7 +10,7 @@ namespace MVC
         void Init();
         void Start();
         void Stop();
-        void SetBPM();
+        void SetBPM(int bpm);
 
         int GetBPM();
         void RegisterObserver(IBeatObserver o);
