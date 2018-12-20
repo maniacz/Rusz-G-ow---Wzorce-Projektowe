@@ -52,6 +52,7 @@
     <Compile Include="DJSteering.Designer.cs">
       <DependentUpon>DJSteering.cs</DependentUpon>
     </Compile>
+    <Compile Include="DJTest.cs" />
     <Compile Include="DJView.cs">
       <SubType>Form</SubType>
     </Compile>

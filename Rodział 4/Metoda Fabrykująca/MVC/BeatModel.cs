@@ -69,5 +69,12 @@ namespace MVC
             throw new NotImplementedException();
         }
         #endregion
+
+        #region MIDI
+        public void ConfigureMidi()
+        {
+
+        }
+        #endregion MIDI
     }
 }
